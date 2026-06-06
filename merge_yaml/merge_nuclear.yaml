@@ -1,0 +1,10 @@
+filename: "Nuclear Energy"
+
+merges:
+  "nuclear safety": ".*nuclear.*(safe|protection|leak|waste|monitor|accident|emergency|shield|sec|control|inspect|pollution).*"
+  "nuclear energy": ".*nuclear.*(react|fusion|system|energy|fuel|power|plant).*"
+  "energy efficiency": ".*energy.?efficiency.*"
+  renewable: ".*renewable.*"
+  radioactive: ".*radioactive.*"
+
+#limit: 1000

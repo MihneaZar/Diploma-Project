@@ -1,0 +1,10 @@
+filename: "Human"
+
+merges:
+  art: "((.* |)art( .*|)$|.*artist.*)"
+  story: "(.* |)story.*"
+  writer: ".*writer.*"
+  culture: "(.* |)cultur.*"
+  opinion: ".*opinion( .*|)$"
+  politics: ".*politic.*"
+  rights: "(.*(property|digital|indigenous|access|gun|human|ip|transmission|financial).*right|.*copyright.*|.*rightful.*)"

@@ -1,0 +1,32 @@
+nuclear safety:
+    year: 1985
+    count: 76
+    cooc:
+        radioactive: 3
+        nuclear energy: 9
+nuclear energy:
+    year: 1974
+    count: 280
+    cooc:
+        radioactive: 6
+        nuclear safety: 9
+        renewable: 10
+        energy efficiency: 1
+energy efficiency:
+    year: 1991
+    count: 4041
+    cooc:
+        renewable: 48
+        nuclear energy: 1
+renewable:
+    year: 1992
+    count: 1504
+    cooc:
+        nuclear energy: 10
+        energy efficiency: 48
+radioactive:
+    year: 1991
+    count: 96
+    cooc:
+        nuclear safety: 3
+        nuclear energy: 6

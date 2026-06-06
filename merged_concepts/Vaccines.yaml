@@ -1,0 +1,82 @@
+vaccine:
+    year: 1993
+    count: 199
+    cooc:
+        infection/illnesss: 35
+        vaccination: 48
+        treatment: 10
+        immune system: 20
+        immunization: 11
+        health care: 6
+disease:
+    year: 1998
+    count: 320
+    cooc:
+        vaccination: 4
+        health care: 25
+        treatment: 40
+        immune system: 2
+        infection/illnesss: 7
+infection/illnesss:
+    year: 1994
+    count: 748
+    cooc:
+        vaccine: 35
+        health care: 46
+        treatment: 62
+        immune system: 26
+        immunization: 7
+        disease: 7
+        vaccination: 16
+treatment:
+    year: 1969
+    count: 3436
+    cooc:
+        infection/illnesss: 62
+        health care: 241
+        disease: 40
+        vaccination: 5
+        immune system: 12
+        vaccine: 10
+        immunization: 1
+health care:
+    year: 1969
+    count: 5109
+    cooc:
+        treatment: 241
+        disease: 25
+        infection/illnesss: 46
+        immunization: 6
+        vaccination: 10
+        vaccine: 6
+immune system:
+    year: 1994
+    count: 420
+    cooc:
+        treatment: 12
+        infection/illnesss: 26
+        vaccine: 20
+        disease: 2
+        vaccination: 1
+        immunization: 1
+immunization:
+    year: 1994
+    count: 80
+    cooc:
+        infection/illnesss: 7
+        vaccine: 11
+        vaccination: 11
+        health care: 6
+        immune system: 1
+        treatment: 1
+vaccination:
+    year: 1998
+    count: 121
+    cooc:
+        vaccine: 48
+        infection/illnesss: 16
+        disease: 4
+        health care: 10
+        immunization: 11
+        treatment: 5
+        immune system: 1

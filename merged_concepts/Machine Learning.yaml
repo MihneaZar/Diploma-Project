@@ -1,0 +1,124 @@
+machine learning:
+    year: 1959
+    count: 8383
+    cooc:
+        decision making: 134
+        artificial intelligence: 170
+        natural language processing: 186
+        statistics: 364
+        big data: 308
+        optimization: 25
+        neural network: 101
+        problem solving: 5
+        stochastic model: 2
+big data:
+    year: 2001
+    count: 4398
+    cooc:
+        machine learning: 308
+        statistics: 76
+        decision making: 108
+        optimization: 7
+        natural language processing: 22
+        artificial intelligence: 35
+        problem solving: 3
+        neural network: 7
+neural network:
+    year: 1983
+    count: 2294
+    cooc:
+        statistics: 74
+        machine learning: 101
+        natural language processing: 18
+        artificial intelligence: 31
+        decision making: 26
+        stochastic model: 6
+        big data: 7
+        optimization: 10
+        problem solving: 1
+artificial intelligence:
+    year: 1961
+    count: 2306
+    cooc:
+        decision making: 76
+        machine learning: 170
+        statistics: 59
+        optimization: 5
+        natural language processing: 47
+        problem solving: 30
+        neural network: 31
+        stochastic model: 3
+        big data: 35
+stochastic model:
+    year: 1976
+    count: 461
+    cooc:
+        decision making: 5
+        machine learning: 2
+        statistics: 27
+        natural language processing: 1
+        neural network: 6
+        optimization: 2
+        artificial intelligence: 3
+problem solving:
+    year: 1968
+    count: 652
+    cooc:
+        machine learning: 5
+        artificial intelligence: 30
+        decision making: 25
+        natural language processing: 3
+        statistics: 5
+        big data: 3
+        optimization: 2
+        neural network: 1
+decision making:
+    year: 1963
+    count: 6562
+    cooc:
+        artificial intelligence: 76
+        stochastic model: 5
+        big data: 108
+        machine learning: 134
+        statistics: 81
+        problem solving: 25
+        neural network: 26
+        natural language processing: 6
+        optimization: 15
+statistics:
+    year: 1957
+    count: 11897
+    cooc:
+        neural network: 74
+        artificial intelligence: 59
+        optimization: 24
+        machine learning: 364
+        decision making: 81
+        big data: 76
+        natural language processing: 78
+        stochastic model: 27
+        problem solving: 5
+optimization:
+    year: 1987
+    count: 1166
+    cooc:
+        big data: 7
+        machine learning: 25
+        statistics: 24
+        decision making: 15
+        stochastic model: 2
+        artificial intelligence: 5
+        problem solving: 2
+        neural network: 10
+natural language processing:
+    year: 1969
+    count: 1824
+    cooc:
+        machine learning: 186
+        statistics: 78
+        big data: 22
+        neural network: 18
+        problem solving: 3
+        artificial intelligence: 47
+        stochastic model: 1
+        decision making: 6

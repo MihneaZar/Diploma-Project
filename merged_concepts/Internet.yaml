@@ -1,0 +1,50 @@
+online content:
+    year: 2000
+    count: 235
+    cooc:
+        internet: 43
+        virtual reality: 2
+        online learning: 8
+online network:
+    year: 2000
+    count: 64
+    cooc:
+        internet: 1
+online learning:
+    year: 1990
+    count: 1073
+    cooc:
+        internet: 23
+        online content: 8
+        virtual reality: 2
+        video games: 1
+social media:
+    year: 2007
+    count: 36
+    cooc:
+        internet: 1
+video games:
+    year: 1992
+    count: 1113
+    cooc:
+        virtual reality: 106
+        internet: 37
+        online learning: 1
+virtual reality:
+    year: 1990
+    count: 2715
+    cooc:
+        video games: 106
+        internet: 22
+        online learning: 2
+        online content: 2
+internet:
+    year: 1968
+    count: 10305
+    cooc:
+        online learning: 23
+        online content: 43
+        video games: 37
+        virtual reality: 22
+        online network: 1
+        social media: 1

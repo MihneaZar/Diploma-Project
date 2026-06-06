@@ -1,0 +1,12 @@
+filename: "Internet"
+
+merges:
+  "online content": "(.*online.?content.*|content moderation|online moderation|.*censor(ship|.*content).*)"
+  "online network": ".*online.?network.*"
+  "online learning": ".*online.?(learning|education).*"
+  "social media": ".*social.?media.*"
+  "video games": "(.*video.?game.*|.*virtual.*character.*)"
+  "virtual reality": "(.*virtual(.?reality|.?space|.*human).*|.*avatar.*)"
+  internet: ".*internet.*"
+
+#limit: 1000

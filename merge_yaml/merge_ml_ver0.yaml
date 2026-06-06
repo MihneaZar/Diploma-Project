@@ -1,0 +1,13 @@
+filename: "Machine Learning"
+
+merges:
+  "machine learning": "(.*machine learning.*|ml |.* ml)$"
+  "big data": ".*big data.*"
+  "neural network": ".*neural network.* "
+  "artificial intelligence": "(.*artificial intelligence.*|ai |.* ai)$"
+  "stochastic model": ".*stochastic.model.*"
+  "problem solving": ".*problem.solving.*"
+  "decision making": ".*decision.making.*"
+  "statistics": ".*statistics.*"
+  "optimization": "(.*optimization.method.*|.*optimization.strategy.*)"
+  "natural language processing": "(.*natural language processing.*|nlp |.* nlp)$"
