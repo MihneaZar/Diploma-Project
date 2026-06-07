@@ -2,7 +2,6 @@ from timeit import default_timer as timer
 from threading import Thread
 from time import sleep
 from tqdm import tqdm
-import cursor
 import pickle
 import string
 import os
@@ -20,8 +19,6 @@ def time_counter(start, stop, message):
 
 def main():
     start = int(timer())
-
-    cursor.hide()
 
     stop = False
     t = Thread(target=lambda: time_counter(start, lambda: stop, "Loading data"))

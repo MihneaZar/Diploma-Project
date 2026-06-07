@@ -12,7 +12,6 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from string import digits
-from tqdm import tqdm
 import calendar
 import re
 import os
