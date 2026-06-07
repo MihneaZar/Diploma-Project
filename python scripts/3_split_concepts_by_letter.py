@@ -45,5 +45,6 @@ def main():
         with open(f"split_concepts/{letter}.pkl", 'wb') as file:
             pickle.dump(letter_data, file)
 
+
 if __name__=="__main__":
     main()

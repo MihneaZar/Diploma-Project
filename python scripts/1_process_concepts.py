@@ -1,11 +1,10 @@
-RUN_NO = 1
-
 print("Importing...")
 
 from threading import Thread
 from tqdm import tqdm
 import pandas as pd
 import spacy
+# import needed for spacy textrank pipeline
 import pytextrank
 from langdetect import detect
 import nltk
@@ -39,7 +38,6 @@ print("NLP built.\n")
 
 tqdm.pandas()
 
-#trans = str.maketrans('', '', string.punctuation.replace('-', '') + "“”«»’‘—")
 lemmatizer = WordNetLemmatizer()
 stopwords = stopwords.words('english') + ["however"]
 general_words = list(map(lambda s: s.lower(), calendar.month_name[1:])) + ["study", "introduction", "conclusion", \
@@ -50,25 +48,29 @@ def text_clean_up(text: str):
     # ignoring text with digits
     if any(digit in text for digit in digits):
         return ""
+    
     # treating text in lowercase
     text = text.lower()
+    
     # removing non-letters
     text = re.sub('[^a-z]+', ' ', text)
-        #text = text.translate(trans)
-        # replacing dashes with spaces
-        #text = text.replace('-', '')
+    
     # removing extra spaces
     text = " ".join(text.split())
+
     spaces = text.count(" ")
     # single words are too general
     # and more than five words is too specific
     if not (1 <= spaces and spaces <= 4):
         return ""
+    
     # lemmatizing words in text
     text = [lemmatizer.lemmatize(word) for word in word_tokenize(text)]
+
     # ignoring text if any stopword appears
     if any(word in text for word in stopwords):
         return ""
+    
     # ignoring text if any general word appears
     if any(word in text for word in general_words):
         return ""
@@ -125,15 +127,21 @@ def thread_test(no, df):
     #print(df)
     df.to_hdf(f"concepts/data_{no}.h5", key="data")
 
-threads = []
-# divided by no of threads in run, then no. of runs
-chunk_size = len(data) // 10 // 4
-#chunk_size = 10
 
-THREAD_NO = 10
-#chunk_size = len(data) // 10
+# RUN_NO is the current run of the program
+# THREAD_NO is the number of threads to use
+# TOTAL_RUNS is the number of runs to split the data into 
+# depending on the system resources, change THREAD_NO and TOTAL_RUNS accordingly
+# if running on a cloud system with time limits, dont forget to adjust these values to avoid going over the limit
+RUN_NO     = 1
+THREAD_NO  = 10
+TOTAL_RUNS = 4
+
+# divided by no of threads in run, then no. of runs
+chunk_size = len(data) // THREAD_NO // TOTAL_RUNS
+
+threads = []
 for i in range(THREAD_NO*(RUN_NO-1), THREAD_NO*RUN_NO):
-#for i in [0, 1, 5, 7, 10, 15]:
     thread = Thread(target=thread_test, args=((i, data[chunk_size * i:chunk_size * (i + 1)])))
     thread.start()
     threads.append(thread)

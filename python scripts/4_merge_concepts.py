@@ -97,15 +97,11 @@ def merge_concepts(data, concept_list):
 
     filename_base = merge_info["filename"]
 
-    #print(names)
-    #print(regexes)
-    #print(filename_base)
-
     filename = filename_base + ".yaml"
     if filename not in os.listdir("merged_concepts"):
         # if the filename is bad, resort to the fir`st name of first concept
         try:
-            open(f"merged_concepts/{filename}", 'wb')
+            open(f"merged_concepts/{filename}", 'w')
         except:
             filename = regex_lists[0][0]
 
@@ -125,54 +121,6 @@ def merge_concepts(data, concept_list):
 
     for t in threads:
         t.join()
-        continue
-
-        concepts = regex_lists[pos]
-
-        new_concept = {"year": 3000, "count": 0, "cooc": {}}
-
-        # loading concepts from files
-        # keeping lowest year value
-        # adding counts
-        # adding cooc -> only counting merged concepts, under the new name
-        for concept in tqdm(concepts, f"Merging {names[pos]}"):
-            letter = concept[0]
-            # concepts that don't start with a letter (hopefully fixed)
-            try:
-                data[letter] = pickle.load(open(f"split_concepts/{letter}.pkl", 'rb'))
-            except:
-                pass
-
-            # ignoring if it doesn't start with a letter
-            if letter not in data:
-                continue
-
-            concept = data[letter][concept]
-            new_concept["year"]   = min(new_concept["year"], concept["year"])
-            new_concept["count"] += concept["count"]
-            for other_concept in concept["cooc"]:
-                concept_key   = None
-                concept_value = concept["cooc"][other_concept]
-
-                # searching for the merged concept
-                for oth_pos in range(len(regex_lists)):
-                    if other_concept in regex_lists[oth_pos]:
-                        # ignoring same position, aka same concept
-                        if oth_pos != pos:
-                            concept_key = names[oth_pos]
-                        break
-
-                # ignoring non-merged concepts
-                if not concept_key:
-                    continue
-
-                if concept_key in new_concept["cooc"]:
-                    new_concept["cooc"][concept_key] += concept_value
-                else:
-                    new_concept["cooc"][concept_key] = concept_value
-
-        new_data[names[pos]] = new_concept
-        # menu.separateInteraction(str(pos) + "\n" + str(names[pos]) + "\n" + str(new_concept))
 
     with open(f"merged_concepts/{filename}", 'w', encoding='utf-8') as file:
         yaml.safe_dump(new_data, file, indent=4, sort_keys=False)
