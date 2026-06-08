@@ -1,0 +1,11 @@
+filename: "Vaccine"
+
+merges:
+  vaccine: ".*vaccine.*"
+  disease: ".*disease.*"
+  infection/illness: "(.*infection.*|.*illness.*)"
+  treatment: ".*treatment.*"
+  "health care": ".*health care.*"
+  "immune system": ".*immune system.*"
+  immunization: ".*immunization.*"
+  vaccination: ".*vaccination.*"
