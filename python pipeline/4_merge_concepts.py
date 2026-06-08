@@ -12,7 +12,7 @@ def thread_merge(pos, data, names, regex_lists, new_data):
     start = time()
     concepts = regex_lists[pos]
 
-    new_concept = {"year": 3000, "count": 0, "cooc": {}}
+    new_concept = {"year": 3000, "count": 0, "recent": 0, "cooc": {}}
     new_data[names[pos]] = new_concept
 
     # loading concepts from files
@@ -37,8 +37,9 @@ def thread_merge(pos, data, names, regex_lists, new_data):
             continue
 
         concept = data[letter][concept]
-        new_concept["year"]   = min(new_concept["year"], concept["year"])
-        new_concept["count"] += concept["count"]
+        new_concept["year"]    = min(new_concept["year"], concept["year"])
+        new_concept["count"]  += concept["count"]
+        new_concept["recent"] += concept["recent"]
         for other_concept in concept["cooc"]:
             concept_key   = None
             concept_value = concept["cooc"][other_concept]

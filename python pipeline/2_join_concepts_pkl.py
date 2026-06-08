@@ -20,10 +20,12 @@ def process_row(row):
             data[abs] = {}
             data[abs]["year"] = row["year"]
             data[abs]["count"] = 1
+            data[abs]["recent"] = 1 if 2013 <= row["year"] else 0
             data[abs]["cooc"] = {}
         else:
             data[abs]["year"] = min(data[abs]["year"], row["year"])
             data[abs]["count"] += 1
+            data[abs]["recent"] += 1 if 2013 <= row["year"] else 0
 
         for othabs in [a for a in row["abstract"] if a != abs]:
             if othabs in data[abs]["cooc"]:
