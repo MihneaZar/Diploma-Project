@@ -28,8 +28,6 @@ print(len(data))
 
 print("Data read. Building NLP...")
 
-quit()
-
 nlp = spacy.load("en_core_web_sm")
 nlp.add_pipe("textrank")
 
@@ -126,6 +124,10 @@ def thread_test(no, df):
     #print(df)
     df.to_hdf(f"concepts/data_{no}.h5", key="data")
 
+
+# make the "concepts" folder
+if not os.path.exists("concepts"):
+    os.mkdir("concepts")
 
 # RUN_NO is the current run of the program
 # THREAD_NO is the number of threads to use
