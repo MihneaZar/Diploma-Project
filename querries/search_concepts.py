@@ -13,7 +13,7 @@ os.chdir("..")
 def main():
     concept_list = pickle.load(open(f"split_concepts/concept_list.pkl", 'rb'))
 
-    menu = MenuInterface(yaml.safe_load(open("menu.yaml")))
+    menu = MenuInterface(yaml.safe_load(open("querries/menu.yaml")))
 
     data = {}
     while True:
