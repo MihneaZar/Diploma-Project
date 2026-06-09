@@ -2,6 +2,7 @@ from timeit import default_timer as timer
 from threading import Thread
 from time import sleep
 from tqdm import tqdm
+import cursor
 import pickle
 import string
 import os
@@ -18,6 +19,7 @@ def time_counter(start, stop, message):
 
 
 def main():
+    cursor.hide()
     start = int(timer())
 
     stop = False
@@ -41,6 +43,8 @@ def main():
         letter_data = {k: v for k, v in data.items() if k.startswith(letter)}
         with open(f"split_concepts/{letter}.pkl", 'wb') as file:
             pickle.dump(letter_data, file)
+    
+    cursor.show()
 
 
 if __name__=="__main__":
