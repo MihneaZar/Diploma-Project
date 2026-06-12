@@ -102,13 +102,13 @@ def merge_concepts(data, concept_list):
     if filename not in os.listdir("merged_concepts"):
         # if the filename is bad, resort to the fir`st name of first concept
         try:
-            open(f"merged_concepts/{filename}", 'w')
+            open(f"merged_concepts/{filename_base}/{filename}", 'w')
         except:
             filename = regex_lists[0][0]
 
     else:
         filename_no = 0
-        while filename in os.listdir("merged_concepts"):
+        while filename in os.listdir("merged_concepts/{filename_base}"):
             filename = f'{filename_base}_{filename_no}.yaml'
             filename_no += 1
 
@@ -123,10 +123,10 @@ def merge_concepts(data, concept_list):
     for t in threads:
         t.join()
 
-    with open(f"merged_concepts/{filename}", 'w', encoding='utf-8') as file:
+    with open(f"merged_concepts/{filename_base}/{filename}", 'w', encoding='utf-8') as file:
         yaml.safe_dump(new_data, file, indent=4, sort_keys=False)
 
-    print(f"\n\nConcept merge saved to merged_concepts/{filename}.")
+    print(f"\n\nConcept merge saved to merged_concepts/{filename_base}/{filename}.")
 
 
 def main():
