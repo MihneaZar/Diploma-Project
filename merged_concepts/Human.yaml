@@ -1,68 +1,75 @@
 art:
     year: 1974
     count: 2246
+    recent: 1055
     cooc:
-        rights: 11
         culture: 152
-        opinion: 8
         story: 18
-        politics: 4
         writer: 4
+        rights: 11
+        opinion: 8
+        politics: 4
 story:
     year: 1984
     count: 1598
+    recent: 717
     cooc:
+        art: 18
+        culture: 57
         politics: 18
         opinion: 19
-        culture: 57
-        art: 18
         writer: 3
 writer:
     year: 1953
     count: 577
+    recent: 212
     cooc:
-        culture: 3
         art: 4
+        culture: 3
         opinion: 3
-        story: 3
         rights: 4
+        story: 3
         politics: 1
 culture:
     year: 1974
     count: 3894
+    recent: 1958
     cooc:
-        opinion: 20
-        politics: 71
         art: 152
         story: 57
-        rights: 37
+        politics: 71
+        opinion: 20
         writer: 3
+        rights: 37
 opinion:
     year: 1969
     count: 2573
+    recent: 1558
     cooc:
         politics: 151
         rights: 3
-        story: 19
         culture: 20
         art: 8
+        story: 19
         writer: 3
 politics:
     year: 1969
     count: 1493
+    recent: 912
     cooc:
-        culture: 71
-        story: 18
         opinion: 151
         rights: 11
-        writer: 1
+        culture: 71
         art: 4
+        story: 18
+        writer: 1
 rights:
     year: 1982
     count: 1755
+    recent: 660
     cooc:
-        culture: 37
-        art: 11
-        writer: 4
         opinion: 3
+        culture: 37
+        writer: 4
+        art: 11
         politics: 11
