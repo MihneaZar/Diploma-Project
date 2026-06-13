@@ -58,7 +58,11 @@ def main():
         dot.graph_attr['rankdir'] = 'LR'  
     
     for el in data:
-        dot.node(el, f'{el}\nyear: {data[el]["year"]}\ncount: {data[el]["count"]}\nnovelty: {(data[el]["recent"] / 5) / (data[el]["count"] / (2018 - data[el]["year"])):.2f}')
+        name = el.title()
+        if 2 <= name.count(' '):
+            pos = name.find(' ', name.find(' ') + 1)
+            name = name[:pos] + '\n' + name[pos + 1:]
+        dot.node(el, f'{name}\nYear: {data[el]["year"]}\nCount: {data[el]["count"]}\nNovelty: {(data[el]["recent"] / 5) / (data[el]["count"] / (2018 - data[el]["year"])):.2f}')
 
         for oth_el in data[el]["cooc"]:
             total_weight = sum([data[el]["cooc"][oth_el] for oth_el in data[el]["cooc"]])
@@ -76,7 +80,11 @@ def main():
         dot.graph_attr['rankdir'] = 'LR'  
 
     for el in data:
-        dot.node(el, f'{el}\nyear: {data[el]["year"]}\ncount: {data[el]["count"]}\nnovelty: {(data[el]["recent"] / 5) / (data[el]["count"] / (2018 - data[el]["year"])):.2f}')
+        name = el.title()
+        if 2 <= name.count(' '):
+            pos = name.find(' ', name.find(' ') + 1)
+            name = name[:pos] + '\n' + name[pos + 1:]
+        dot.node(el, f'{name}\nYear: {data[el]["year"]}\nCount: {data[el]["count"]}\nNovelty: {(data[el]["recent"] / 5) / (data[el]["count"] / (2018 - data[el]["year"])):.2f}')
 
         total_weight  = sum([data[el]["cooc"][oth_el] for oth_el in data[el]["cooc"]])
         remove_weight = 0
