@@ -8,7 +8,7 @@ import os
 
 os.chdir("..")
 
-def thread_merge(pos, data, names, regex_lists, new_data):
+def thread_merge(pos, data, names, regex_lists, new_data, max_hours):
     start = time()
     concepts = regex_lists[pos]
 
@@ -20,8 +20,8 @@ def thread_merge(pos, data, names, regex_lists, new_data):
     # adding counts
     # adding cooc -> only counting merged concepts, under the new name
     for concept in tqdm(concepts, f"Merging '{names[pos]}'"):
-        # more than eleven hours have passed -> break to avoid running out of time
-        if (time() - start) // 3600 == 11:
+        # more than max hours have passed -> break to avoid running out of time
+        if max_hours and max_hours <= (time() - start) / 3600:
             print(f"'{names[pos]}' thread quitting early...")
             break
 
@@ -76,10 +76,6 @@ def merge_concepts(data, concept_list):
         # only adding the concepts that match the regex, and that aren't in previous merge list
         regex_list = [concept for concept in tqdm(concept_list, f"Creating list for '{names[pos]}'") if re.compile(regexes[pos]).match(concept) and not any(concept in regex_list for regex_list in regex_lists)]
 
-        # limting merge lists
-        if "limit" in merge_info:
-            regex_list = regex_list[:merge_info["limit"]]
-
         regex_lists.append(regex_list)
 
     print()
@@ -99,8 +95,12 @@ def merge_concepts(data, concept_list):
     filename_base = merge_info["filename"]
 
     filename = filename_base + ".yaml"
-    if filename not in os.listdir("merged_concepts"):
-        # if the filename is bad, resort to the fir`st name of first concept
+
+    if not os.path.exists(f"merged_concepts/{filename_base}"):
+        os.mkdir(f"merged_concepts/{filename_base}")
+
+    if filename not in os.listdir(f"merged_concepts/{filename_base}"):
+        # if the filename is bad, resort to the first name of first concept
         try:
             open(f"merged_concepts/{filename_base}/{filename}", 'w')
         except:
@@ -108,15 +108,18 @@ def merge_concepts(data, concept_list):
 
     else:
         filename_no = 0
-        while filename in os.listdir("merged_concepts/{filename_base}"):
+        while filename in os.listdir(f"merged_concepts/{filename_base}"):
             filename = f'{filename_base}_{filename_no}.yaml'
             filename_no += 1
+
+    # the maximum number of hours before threads stop merging and save whatever data that has already been collected
+    max_hours = merge_info["max_hours"] if "max_hours" in merge_info else None
 
     print("Merging concepts:")
     new_data = {}
     threads = []
     for pos in range(len(regex_lists)):
-        t = Thread(target=lambda: thread_merge(pos, data, names, regex_lists, new_data))
+        t = Thread(target=lambda: thread_merge(pos, data, names, regex_lists, new_data, max_hours))
         t.start()
         threads.append(t)
 

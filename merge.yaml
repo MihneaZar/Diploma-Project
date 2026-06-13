@@ -1,4 +1,4 @@
-filename: "Renewable Energy"
+filename: "test"
 
 merges:
   renewable: ".*renewable.*"
@@ -8,4 +8,5 @@ merges:
   "hydro energy": ".*hydro.?(electric|turbine|energy|power|plant|system|gene|unit).*"
   "nuclear safety": ".*nuclear.*(safe|protection|leak|waste|monitor|accident|emergency|shield|sec|control|inspect|pollution|mal).*"
   "nuclear energy": ".*.*nuclear.*(react|fusion|system|energy|fuel|power|plant|electr|gene).*"
-  
+
+max_hours: 0.006
