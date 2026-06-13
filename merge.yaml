@@ -1,10 +1,11 @@
-filename: "Nuclear Energy"
+filename: "Renewable Energy"
 
 merges:
-  "nuclear safety": ".*nuclear.*(safe|protection|leak|waste|monitor|accident|emergency|shield|sec|control|inspect|pollution).*"
-  "nuclear energy": ".*nuclear.*(react|fusion|system|energy|fuel|power|plant).*"
-  "energy efficiency": ".*energy.?efficiency.*"
   renewable: ".*renewable.*"
-  radioactive: ".*radioactive.*"
-
-#limit: 1000
+  "energy efficiency": ".*energy.?efficiency.*"
+  "solar energy": ".*solar.?(electr|energy|power|panel|plant|system|gen|unit).*"
+  "wind energy": ".*wind.?(power|energy|turbine|farm|plant|system|gen|unit).*"
+  "hydro energy": ".*hydro.?(electric|turbine|energy|power|plant|system|gene|unit).*"
+  "nuclear safety": ".*nuclear.*(safe|protection|leak|waste|monitor|accident|emergency|shield|sec|control|inspect|pollution|mal).*"
+  "nuclear energy": ".*.*nuclear.*(react|fusion|system|energy|fuel|power|plant|electr|gene).*"
+  

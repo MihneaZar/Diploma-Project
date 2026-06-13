@@ -1,0 +1,61 @@
+renewable:
+    year: 1992
+    count: 1504
+    recent: 1175
+    cooc:
+        wind energy: 259
+        energy efficiency: 48
+        solar energy: 123
+        hydro energy: 15
+        nuclear energy: 10
+energy efficiency:
+    year: 1991
+    count: 4041
+    recent: 2554
+    cooc:
+        solar energy: 19
+        renewable: 48
+        wind energy: 4
+        nuclear energy: 1
+solar energy:
+    year: 1981
+    count: 491
+    recent: 314
+    cooc:
+        renewable: 123
+        wind energy: 28
+        energy efficiency: 19
+        nuclear energy: 2
+wind energy:
+    year: 1993
+    count: 1131
+    recent: 794
+    cooc:
+        renewable: 259
+        solar energy: 28
+        hydro energy: 10
+        energy efficiency: 4
+hydro energy:
+    year: 1996
+    count: 128
+    recent: 45
+    cooc:
+        renewable: 15
+        wind energy: 10
+        nuclear energy: 1
+nuclear safety:
+    year: 1985
+    count: 78
+    recent: 31
+    cooc:
+        nuclear energy: 10
+nuclear energy:
+    year: 1974
+    count: 289
+    recent: 144
+    cooc:
+        nuclear safety: 10
+        solar energy: 2
+        renewable: 10
+        hydro energy: 1
+        energy efficiency: 1

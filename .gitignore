@@ -3,4 +3,3 @@ split_concepts/
 *.csv
 concept_data.pkl
 other_data/
-merged_concepts_old/
