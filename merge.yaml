@@ -1,10 +1,10 @@
-filename: "Human"
+filename: "Nuclear Energy"
 
 merges:
-  art: "((.* |)art( .*|)$|.*artist.*)"
-  story: "(.* |)story.*"
-  writer: ".*writer.*"
-  culture: "(.* |)cultur.*"
-  opinion: ".*opinion( .*|)$"
-  politics: ".*politic.*"
-  rights: "(.*(property|digital|indigenous|access|gun|human|ip|transmission|financial).*right|.*copyright.*|.*rightful.*)"
+  "nuclear safety": ".*nuclear.*(safe|protection|leak|waste|monitor|accident|emergency|shield|sec|control|inspect|pollution).*"
+  "nuclear energy": ".*nuclear.*(react|fusion|system|energy|fuel|power|plant).*"
+  "energy efficiency": ".*energy.?efficiency.*"
+  renewable: ".*renewable.*"
+  radioactive: ".*radioactive.*"
+
+#limit: 1000

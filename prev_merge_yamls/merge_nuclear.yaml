@@ -6,5 +6,3 @@ merges:
   "energy efficiency": ".*energy.?efficiency.*"
   renewable: ".*renewable.*"
   radioactive: ".*radioactive.*"
-
-#limit: 1000
