@@ -1,12 +1,11 @@
-filename: "test"
+filename: "Vaccine"
 
 merges:
-  renewable: ".*renewable.*"
-  "energy efficiency": ".*energy.?efficiency.*"
-  "solar energy": ".*solar.?(electr|energy|power|panel|plant|system|gen|unit).*"
-  "wind energy": ".*wind.?(power|energy|turbine|farm|plant|system|gen|unit).*"
-  "hydro energy": ".*hydro.?(electric|turbine|energy|power|plant|system|gene|unit).*"
-  "nuclear safety": ".*nuclear.*(safe|protection|leak|waste|monitor|accident|emergency|shield|sec|control|inspect|pollution|mal).*"
-  "nuclear energy": ".*.*nuclear.*(react|fusion|system|energy|fuel|power|plant|electr|gene).*"
-
-max_hours: 0.006
+  vaccine: ".*vaccine.*"
+  disease: ".*disease.*"
+  infection/illness: "(.*infection.*|.*illness.*)"
+  treatment: ".*treatment.*"
+  "health care": ".*health care.*"
+  "immune system": ".*immune system.*"
+  immunization: ".*immunization.*"
+  vaccination: ".*vaccination.*"

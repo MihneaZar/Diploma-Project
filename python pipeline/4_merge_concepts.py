@@ -93,7 +93,6 @@ def merge_concepts(data, concept_list):
     print(f"{concepts_count}\n")
 
     filename_base = merge_info["filename"]
-
     filename = filename_base + ".yaml"
 
     if not os.path.exists(f"merged_concepts/{filename_base}"):

@@ -5,7 +5,7 @@ vaccine:
     cooc:
         disease: 61
         vaccination: 48
-        infection/illness: 40
+        infection: 40
         immune system: 4
         treatment: 10
         immunization: 11
@@ -19,10 +19,10 @@ disease:
         treatment: 492
         vaccination: 50
         vaccine: 61
-        infection/illness: 239
+        infection: 239
         immunization: 11
         immune system: 12
-infection/illness:
+infection:
     year: 1994
     count: 1030
     recent: 608
@@ -42,7 +42,7 @@ treatment:
         disease: 492
         vaccination: 5
         immune system: 5
-        infection/illness: 97
+        infection: 97
         vaccine: 10
         health care: 59
         immunization: 1
@@ -53,7 +53,7 @@ health care:
     cooc:
         disease: 172
         treatment: 59
-        infection/illness: 35
+        infection: 35
         vaccination: 4
         vaccine: 2
 immune system:
@@ -64,14 +64,14 @@ immune system:
         disease: 12
         vaccination: 1
         vaccine: 4
-        infection/illness: 2
+        infection: 2
         treatment: 5
 immunization:
     year: 1994
     count: 80
     recent: 54
     cooc:
-        infection/illness: 7
+        infection: 7
         vaccine: 11
         disease: 11
         vaccination: 11
@@ -83,7 +83,7 @@ vaccination:
     cooc:
         vaccine: 48
         disease: 50
-        infection/illness: 17
+        infection: 17
         treatment: 5
         immune system: 1
         health care: 4
