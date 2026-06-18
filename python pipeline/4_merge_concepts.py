@@ -8,12 +8,14 @@ import os
 
 os.chdir("..")
 
-def thread_merge(pos, data, names, regex_lists, new_data, max_hours):
+def thread_merge(pos, names, regex_lists, new_data, max_hours):
     start = time()
     concepts = regex_lists[pos]
 
     new_concept = {"year": 3000, "count": 0, "recent": 0, "cooc": {}}
     new_data[names[pos]] = new_concept
+
+    data = {}
 
     # loading concepts from files
     # keeping lowest year value
@@ -26,15 +28,10 @@ def thread_merge(pos, data, names, regex_lists, new_data, max_hours):
             break
 
         letter = concept[0]
-        # concepts that don't start with a letter (hopefully fixed)
-        try:
-            data[letter] = pickle.load(open(f"split_concepts/{letter}.pkl", 'rb'))
-        except:
-            pass
-
-        # ignoring if it doesn't start with a letter
+        
+        # file for starting letter hasn't been added to data
         if letter not in data:
-            continue
+            data[letter] = pickle.load(open(f"split_concepts/{letter}.pkl", 'rb'))
 
         concept = data[letter][concept]
         new_concept["year"]    = min(new_concept["year"], concept["year"])
@@ -62,7 +59,7 @@ def thread_merge(pos, data, names, regex_lists, new_data, max_hours):
                 new_concept["cooc"][concept_key] = concept_value
 
 
-def merge_concepts(data, concept_list):
+def merge_concepts(concept_list):
     merge_info = yaml.safe_load(open("merge.yaml"))
 
     print(merge_info)
@@ -118,7 +115,7 @@ def merge_concepts(data, concept_list):
     new_data = {}
     threads = []
     for pos in range(len(regex_lists)):
-        t = Thread(target=lambda: thread_merge(pos, data, names, regex_lists, new_data, max_hours))
+        t = Thread(target=lambda: thread_merge(pos, names, regex_lists, new_data, max_hours))
         t.start()
         threads.append(t)
 
@@ -134,8 +131,7 @@ def merge_concepts(data, concept_list):
 def main():
     concept_list = pickle.load(open(f"split_concepts/concept_list.pkl", 'rb'))
 
-    data = {}
-    merge_concepts(data, concept_list)
+    merge_concepts(concept_list)
 
 
 if __name__=="__main__":
