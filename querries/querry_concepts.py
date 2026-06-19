@@ -78,6 +78,9 @@ def trace_concept(regex, filename, concept_list):
                 last_count = top[min_concept][0]
                 last_year  = top[min_concept][1] 
 
+    # applying title() to concept names
+    top = {concept.title(): top[concept] for concept in top}
+
     # first, ordering by years (for equal counts)
     top = dict(sorted(top.items(), key=lambda item: item[1][1]))
     # then ordering by count
