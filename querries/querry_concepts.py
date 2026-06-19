@@ -145,12 +145,14 @@ def main():
 
         # get concept entries based on complete name
         if path.startswith("Get"):
-            concepts = menu.separateInteraction(function=lambda: input("Type concepts, separated by comma: ").lower(), showCursor=True)
+            concepts = menu.separateInteraction(function=lambda: input("Type concepts, separated by comma (add ':{number}' to limit co-occurences): ").lower(), showCursor=True)
             if not concepts or concepts.isspace():
                 continue
             concepts = [concept.strip() for concept in concepts.split(",")]
             print_text = "\n"
             for concept in concepts:
+                limit   = int(concept[concept.find(':') + 1:].strip()) if (':' in concept and concept[concept.find(':') + 1:].strip().isdigit()) else None
+                concept = concept[:concept.find(':')].strip() if ':' in concept else concept
                 letter = concept[0]
                 if letter not in data:
                     # concepts that don't start with a letter (hopefully fixed)
@@ -160,11 +162,28 @@ def main():
                         pass
 
                 if letter in data and concept in data[letter]:
-                    print_text += f"{concept.capitalize()}:\n"
-                    print_text += str(data[letter][concept]) + '\n'
+                    concept_data = data[letter][concept]
+
+                    print_text += f"{concept.title()}:\n"
+                    print_text += f"\tYear: {concept_data['year']}\n"
+                    print_text += f"\tCount: {concept_data['count']}\n"
+                    print_text += f"\tCo-occurences:\n"
+
+                    if not limit:
+                        limit = len(concept_data['cooc'])
+                    
+                    # copying them manually to avoid changing origin
+                    cooc = {c: concept_data['cooc'][c] for c in concept_data['cooc']}
+                    cooc = dict(sorted(cooc.items(), key=lambda item: item[1], reverse=True))
+                    for other_concept in cooc:
+                        # the first {number} co-occurences have been added
+                        if limit == 0:
+                            break
+                        limit -= 1
+                        print_text += f"\t\t{other_concept.title()}: {concept_data['cooc'][other_concept]}\n"
 
                 else:
-                    print_text += f"{concept.capitalize()} not found.\n"
+                    print_text += f"{concept.title()} not found.\n"
 
             menu.separateInteraction(print_text, startAtTop=True)
 
@@ -180,7 +199,7 @@ def main():
                 continue
             
             stop = False
-            filename = menu.separateInteraction(function=lambda: input("Output folder name: ").lower(), showCursor=True)
+            filename = menu.separateInteraction(function=lambda: input("Output folder name: "), showCursor=True)
             while True:
                 # empty folder name cancels
                 if not filename or filename.isspace():
@@ -189,7 +208,7 @@ def main():
 
                 # folder with that name already exists
                 if filename in os.listdir("querries"):
-                    filename = menu.separateInteraction(function=lambda: input("Name already used, try again: ").lower(), showCursor=True)
+                    filename = menu.separateInteraction(function=lambda: input("Name already used, try again: "), showCursor=True)
                     continue
 
                 # checking that folder name is valid
