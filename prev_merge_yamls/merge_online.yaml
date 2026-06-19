@@ -8,5 +8,3 @@ merges:
   "video games": "(.*video.?game.*|.*virtual.*character.*)"
   "virtual reality": "(.*virtual(.?reality|.?space|.*human).*|.*avatar.*)"
   internet: ".*internet.*"
-
-#limit: 1000

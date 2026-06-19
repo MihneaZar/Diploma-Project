@@ -2,6 +2,7 @@ from ConsoleListInterface import MenuInterface, waitForEnter
 import matplotlib.pyplot as plt
 from readchar import key
 from tqdm import tqdm
+import pandas as pd
 import numpy as np
 import matplotlib
 import pickle
@@ -27,6 +28,11 @@ def trace_concept(regex, filename, concept_list):
 
     print(f"\n{len(regex_list)} concepts found.\n")
 
+    try:
+        df = pd.read_hdf("other_data/years.h5", key="concept")
+    except:
+        df = None
+
     data  = {}
     years = {}
     top   = {} # {concept: (count, year)} for top ten concepts (with highest counts) 
@@ -43,7 +49,7 @@ def trace_concept(regex, filename, concept_list):
         if year in years:
             years[year] += 1
         else:
-            years[year] = 1
+            years[year]  = 1
 
         count = data[letter][concept]["count"]
         # for the first ten concept processed
@@ -82,27 +88,48 @@ def trace_concept(regex, filename, concept_list):
 
     print(f"\nTop concepts saved to 'querries/{filename}/{filename}.yaml'.")
 
+    if df is not None:
+        # not enough data in these years
+        for year in [1951, 1952]:
+            if year in years:
+                del year[years]
+
+        for year in years:
+            try:
+                # * 100 => this value is in percentage points
+                years[year] = years[year] * 100 / df['count'].loc[year]
+            except:
+                del years[year]
+
     fig, ax = plt.subplots()
 
     fig.set_figwidth(16)
     fig.set_figheight(8)
-    plt.margins(x=0.02, y=0.4)
+    plt.margins(x=0.02, y=0.5)
 
     plt.scatter(years.keys(), years.values())
 
     plt.xlabel("Year")
-    plt.ylabel("Count")
     plt.tick_params(axis='x', which='both', rotation=90)#, pad=20)
     plt.tight_layout()
-    for xy in zip(years.keys(), years.values()):
-        plt.annotate(f'{xy[0]}, {xy[1]}', xy=xy, rotation=90)
+
+    if df is None:
+        plt.ylabel("Count")
+        for xy in zip(years.keys(), years.values()):
+            plt.annotate(f'{xy[0]}, {xy[1]}', xy=xy, rotation=90)
+        # setting bottom y at y frequency over four for better visibility 
+        ax.set_ylim(bottom=-y_freq/4) 
+        
+    else:
+        plt.ylabel("log-10 % of total new concepts")
+        for xy in zip(years.keys(), years.values()):
+            plt.annotate(f'{xy[0]}, {math.log(xy[1], 10):.2f}', xy=xy, rotation=90)
+        ax.set_yscale('log', base=10)
 
     y_ticks = ax.get_yticks()
     y_freq  = y_ticks[1] - y_ticks[0]
     # setting xticks for all years
     ax.set_xticks(np.arange(math.floor(ax.get_xlim()[0]), math.ceil(ax.get_xlim()[1]), 1))
-    # setting bottom y at y frequency over four for better visibility 
-    ax.set_ylim(bottom=-y_freq/4) 
 
     plt.savefig(f"querries/{filename}/{filename}.png")
 
@@ -189,7 +216,7 @@ def main():
 
         # trace merged concept based on regex
         if path.startswith("Trace"):
-            regex = menu.separateInteraction(function=lambda: input("Regex to search for: ").lower(), showCursor=True)
+            regex = menu.separateInteraction(function=lambda: input("Regex of concept to trace: ").lower(), showCursor=True)
             if not regex or regex.isspace():
                 continue
             try:
