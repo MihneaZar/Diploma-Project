@@ -70,9 +70,9 @@ def merge_concepts(concept_list):
     # each sublist represents a concept to be merged
     regex_lists = []
     for pos in tqdm(range(len(regexes)), "Creating merge lists"):
-        regex = re.compile(regexes[pos])
+        pattern = re.compile(regexes[pos])
         # only adding the concepts that match the regex, and that aren't in previous merge list
-        regex_list = [concept for concept in tqdm(concept_list, f"Creating list for '{names[pos]}'") if regex.match(concept) and not any(concept in regex_list for regex_list in regex_lists)]
+        regex_list = [concept for concept in tqdm(concept_list, f"Creating list for '{names[pos]}'") if pattern.match(concept) and not any(concept in regex_list for regex_list in regex_lists)]
 
         regex_lists.append(regex_list)
 

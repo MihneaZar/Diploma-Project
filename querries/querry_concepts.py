@@ -19,7 +19,8 @@ matplotlib.rc('font', **font)
 
 
 def trace_concept(regex, filename, concept_list):
-    regex_list = [concept for concept in tqdm(concept_list, f"Creating list of concepts") if re.compile(regex).match(concept)]
+    pattern = re.compile(regex)
+    regex_list = [concept for concept in tqdm(concept_list, f"Creating list of concepts") if pattern.match(concept)]
 
     if not regex_list:
         print("No concepts found.\nPress enter to continue.")
