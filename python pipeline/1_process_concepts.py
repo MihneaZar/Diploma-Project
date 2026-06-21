@@ -26,12 +26,10 @@ csv_file = next((file for file in os.listdir() if file[-3:] == "csv"))
 data = pd.read_csv(csv_file)[["abstract", "year"]].dropna()
 print(len(data))
 
-print("Data read. Building NLP...")
-
+print("Data read. Loading TextRank...")
 nlp = spacy.load("en_core_web_sm")
 nlp.add_pipe("textrank")
-
-print("NLP built.\n")
+print("TextRank loaded.\n")
 
 tqdm.pandas()
 
