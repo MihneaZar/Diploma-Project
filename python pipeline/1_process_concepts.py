@@ -17,6 +17,11 @@ import sys
 import re
 import os
 
+import warnings
+
+warnings.simplefilter(action='ignore', category=pd.errors.PerformanceWarning) # ignoring pandas performance warning for saving lists in hdf
+
+
 # RUN_NO is the current run of the program
 # TOTAL_RUNS is the number of runs to split the data into 
 # THREAD_NO is the number of threads to use
@@ -26,7 +31,7 @@ import os
 # when providing them as arguments, use '_' instead of a number to keep the default value
 RUN_NO     = 1 if (len(sys.argv) < 2 or sys.argv[1] == '_') else int(sys.argv[1])
 TOTAL_RUNS = 4 if (len(sys.argv) < 3 or sys.argv[2] == '_') else int(sys.argv[2])
-THREAD_NO  = 10 if (len(sys.argv) < 4 or sys.argv[3] == '_') else int(sts.argv[3])
+THREAD_NO  = 10 if (len(sys.argv) < 4 or sys.argv[3] == '_') else int(sys.argv[3])
 
 
 os.chdir("..")
@@ -120,7 +125,7 @@ def check_language(abs):
 
     return result
 
-def thread_test(no, df):
+def thread_run(no, df):
     print(f"Thread #{no + 1}: {len(df)} abstracts")
 
     df["en"] = df["abstract"].progress_map(check_language) 
@@ -145,7 +150,7 @@ chunk_size = len(data) // THREAD_NO // TOTAL_RUNS
 
 threads = []
 for i in range(THREAD_NO*(RUN_NO-1), THREAD_NO*RUN_NO):
-    thread = Thread(target=thread_test, args=((i, data[chunk_size * i:chunk_size * (i + 1)])))
+    thread = Thread(target=thread_run, args=((i, data[chunk_size * i:chunk_size * (i + 1)])))
     thread.start()
     threads.append(thread)
 
