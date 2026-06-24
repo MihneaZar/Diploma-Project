@@ -13,8 +13,21 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from string import digits
 import calendar
+import sys
 import re
 import os
+
+# RUN_NO is the current run of the program
+# TOTAL_RUNS is the number of runs to split the data into 
+# THREAD_NO is the number of threads to use
+# depending on the system resources, change THREAD_NO and TOTAL_RUNS accordingly
+# if running on a cloud system with time limits, dont forget to adjust these values to avoid going over the limit
+# these values can be changed directly here, or you can provide them as script arguments, in the order of the definitions
+# when providing them as arguments, use '_' instead of a number to keep the default value
+RUN_NO     = 1 if (len(sys.argv) < 2 or sys.argv[1] == '_') else int(sys.argv[1])
+TOTAL_RUNS = 4 if (len(sys.argv) < 3 or sys.argv[2] == '_') else int(sys.argv[2])
+THREAD_NO  = 10 if (len(sys.argv) < 4 or sys.argv[3] == '_') else int(sts.argv[3])
+
 
 os.chdir("..")
 
@@ -126,15 +139,6 @@ def thread_test(no, df):
 # make the "concepts" folder
 if not os.path.exists("concepts"):
     os.mkdir("concepts")
-
-# RUN_NO is the current run of the program
-# THREAD_NO is the number of threads to use
-# TOTAL_RUNS is the number of runs to split the data into 
-# depending on the system resources, change THREAD_NO and TOTAL_RUNS accordingly
-# if running on a cloud system with time limits, dont forget to adjust these values to avoid going over the limit
-RUN_NO     = 1
-THREAD_NO  = 10
-TOTAL_RUNS = 4
 
 # divided by no of threads in run, then no. of runs
 chunk_size = len(data) // THREAD_NO // TOTAL_RUNS
