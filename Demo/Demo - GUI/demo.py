@@ -2,6 +2,7 @@ from tkinter import Tk, Frame, Button, Label, DoubleVar, TOP, BOTTOM, HORIZONTAL
 from tkinter.ttk import Style, Progressbar 
 from PIL import Image, ImageTk
 from threading import Thread
+from concurrent.futures import ThreadPoolExecutor
 from time import sleep
 import os
 
@@ -30,10 +31,20 @@ def first_phase(overall_var, var_vect, start):
     start.config(state=DISABLED)
 
     threads = []
-    for i in range(THREAD_NO):
-        thread = Thread(target=lambda: thread_run(i, var_vect[i], data[CHUNK_SIZE * i:CHUNK_SIZE * (i + 1)]))
-        thread.start()
-        threads.append(thread)
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        for i in range(THREAD_NO):
+            thread = executor.submit(thread_run, i, var_vect[i], data[CHUNK_SIZE * i:CHUNK_SIZE * (i + 1)])
+            # thread = Thread(target=lambda: thread_run(i, var_vect[i], data[CHUNK_SIZE * i:CHUNK_SIZE * (i + 1)]))
+            # thread.start()
+            threads.append(thread)
+
+    # threads = []
+    # for i in range(THREAD_NO*(RUN_NO-1), THREAD_NO*RUN_NO):
+    #     # thread = Thread(target=thread_run, args=((i, data[chunk_size * i:chunk_size * (i + 1)])))
+    #     # thread.start()
+    #     # threads.append(thread)
+    #     thread = executor.submit(thread_run, i, data[chunk_size * i:chunk_size * (i + 1)])
+    #     threads.append(thread)
 
     overall = sum([var.get() for var in var_vect]) // THREAD_NO
     while overall <= 100:

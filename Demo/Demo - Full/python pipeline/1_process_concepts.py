@@ -1,5 +1,7 @@
 print("Importing...")
 
+from threading import Thread
+from tqdm import tqdm
 import pandas as pd
 import spacy
 # import needed for spacy textrank pipeline
@@ -11,37 +13,48 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from string import digits
 import calendar
+import sys
 import re
 import os
+from time import sleep
+from concurrent.futures import ThreadPoolExecutor
 
 import warnings
 
-warnings.simplefilter(action='ignore', category=pd.errors.PerformanceWarning)
+warnings.simplefilter(action='ignore', category=pd.errors.PerformanceWarning) # ignoring pandas performance warning for saving lists in hdf
 
-# make the "concepts" folder
-if not os.path.exists("concepts"):
-    os.mkdir("concepts")
 
+# RUN_NO is the current run of the program
+# TOTAL_RUNS is the number of runs to split the data into 
+# THREAD_NO is the number of threads to use
+# depending on the system resources, change THREAD_NO and TOTAL_RUNS accordingly
+# if running on a cloud system with time limits, dont forget to adjust these values to avoid going over the limit
+# these values can be changed directly here, or you can provide them as script arguments, in the order of the definitions
+# when providing them as arguments, use '_' instead of a number to keep the default value
+RUN_NO     = 1 if (len(sys.argv) < 2 or sys.argv[1] == '_') else int(sys.argv[1])
+TOTAL_RUNS = 1 if (len(sys.argv) < 3 or sys.argv[2] == '_') else int(sys.argv[2])
+THREAD_NO  = 10 if (len(sys.argv) < 4 or sys.argv[3] == '_') else int(sys.argv[3])
+
+
+os.chdir("..")
 
 nltk.download('stopwords')
 
 print("Imports finished. Reading data...")
 
-
-DF_ROWS = 20
+DF_ROWS = 800
+ABS_LIMIT = 20
 
 csv_file = next((file for file in os.listdir() if file[-3:] == "csv"))
 data = pd.read_csv(csv_file, nrows=DF_ROWS)[["abstract", "year"]].dropna()
-print(len(data))
-
+print(f"Number of abstracts: {len(data)}")
 
 print("Data read. Loading TextRank...")
-
 nlp = spacy.load("en_core_web_sm")
 nlp.add_pipe("textrank")
-
 print("TextRank loaded.\n")
 
+tqdm.pandas()
 
 lemmatizer = WordNetLemmatizer()
 stopwords = stopwords.words('english') + ["however"]
@@ -95,8 +108,11 @@ def transform_abstract(abstract: list[str]):
     else:
         return None
 
-def process_abstract(abs, var, total):
+def process_abstract(abs):
     try:
+        abs = abs[:ABS_LIMIT]
+        abs = abs[:abs.rfind(' ')]
+
         # obtaining list of concepts
         result = nlp(abs)
         result = [phrase.text for phrase in result._.phrases]
@@ -105,23 +121,19 @@ def process_abstract(abs, var, total):
     except:
         result = None
 
-    print(100 / total)
+    return result
 
-    var.set(var.get() + 100 / total)
+detect("test")
+
+def check_language(abs):
+    try:
+        result = (detect(abs) == 'en')
+    except:
+        result = False
 
     return result
 
-# detect("test")
-
-# def check_language(abs):
-#     try:
-#         result = (detect(abs) == 'en')
-#     except:
-#         result = False
-
-#     return result
-
-def thread_run(no, var, df):
+def thread_run(no, df):
     # print(f"Thread #{no + 1}: {len(df)} abstracts")
 
     # df["en"] = df["abstract"].progress_map(check_language) 
@@ -129,15 +141,40 @@ def thread_run(no, var, df):
 
     # print(f"Thread #{no + 1}: {len(df)} abstracts")
 
-    total = len(df)
-
-    df["abstract"] = df["abstract"].map(lambda abs: process_abstract(abs, var, total))
+    df["abstract"] = df["abstract"].progress_map(process_abstract)
 
     df = df.dropna()
 
+    #print(df)
     df.to_hdf(f"concepts/data_{no}.h5", key="data")
 
+    return f"Thread #{no + 1} done."
 
+
+# make the "concepts" folder
+if not os.path.exists("concepts"):
+    os.mkdir("concepts")
+
+# divided by no of threads in run, then no. of runs
+chunk_size = len(data) // THREAD_NO // TOTAL_RUNS
+
+
+with ThreadPoolExecutor(max_workers=10) as executor:
+    threads = []
+    for i in range(THREAD_NO*(RUN_NO-1), THREAD_NO*RUN_NO):
+        # thread = Thread(target=thread_run, args=((i, data[chunk_size * i:chunk_size * (i + 1)])))
+        # thread.start()
+        # threads.append(thread)
+        thread = executor.submit(thread_run, i, data[chunk_size * i:chunk_size * (i + 1)])
+        threads.append(thread)
+
+    for thread in threads:
+        thread.result()
+
+    # for i in range(1, THREAD_NO + 1):
+    #     print(f"Thread #{i} done.")
+
+print("\n" * 10 + "Finished.")
 
 
 
