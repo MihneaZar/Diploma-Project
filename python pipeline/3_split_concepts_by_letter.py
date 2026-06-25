@@ -30,6 +30,9 @@ def main():
     t.join()
 
     print("\nData loaded.\n")
+    
+    if not os.path.exists("split_concepts"):
+        os.mkdir("split_concepts")
 
     stop = False
     t = Thread(target=lambda: time_counter(start, lambda: stop, "Saving concept list"))
@@ -38,9 +41,6 @@ def main():
         pickle.dump(list(data.keys()), file)
     stop = True
     t.join()
-
-    if not os.path.exists("split_concepts"):
-        os.mkdir("split_concepts")
 
     for letter in tqdm(string.ascii_lowercase, "Saving concepts by letter"):
         letter_data = {k: v for k, v in data.items() if k.startswith(letter)}
