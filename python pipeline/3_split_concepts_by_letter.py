@@ -39,6 +39,9 @@ def main():
     stop = True
     t.join()
 
+    if not os.path.exists("split_concepts"):
+        os.mkdir("split_concepts")
+
     for letter in tqdm(string.ascii_lowercase, "Saving concepts by letter"):
         letter_data = {k: v for k, v in data.items() if k.startswith(letter)}
         with open(f"split_concepts/{letter}.pkl", 'wb') as file:
