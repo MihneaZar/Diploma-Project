@@ -130,6 +130,9 @@ def merge_concepts(concept_list):
 
 
 def main():
+    if not os.path.exists("merged_concepts"):
+        os.mkdir("merged_concepts")
+
     concept_list = pickle.load(open(f"split_concepts/concept_list.pkl", 'rb'))
 
     merge_concepts(concept_list)
