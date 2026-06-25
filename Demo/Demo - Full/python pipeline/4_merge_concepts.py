@@ -24,7 +24,7 @@ def thread_merge(pos, names, regex_lists, new_data, max_hours):
     for concept in tqdm(concepts, f"Merging '{names[pos]}'"):
         # more than max hours have passed -> break to avoid running out of time
         if max_hours and max_hours <= (time() - start) / 3600:
-            print(f"'{names[pos]}' thread quitting early...")
+            # print(f"'{names[pos]}' thread quitting early...")
             break
 
         letter = concept[0]
@@ -124,7 +124,7 @@ def merge_concepts(concept_list):
     with open(f"merged_concepts/{filename_base}/{filename}", 'w', encoding='utf-8') as file:
         yaml.safe_dump(new_data, file, indent=4, sort_keys=False)
 
-    print(f"\n\nConcept merge saved to merged_concepts/{filename_base}/{filename}.")
+    print('\n' * 10 + f"\n\nConcept merge saved to merged_concepts/{filename_base}/{filename}.")
 
 
 def main():
