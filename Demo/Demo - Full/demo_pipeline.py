@@ -1,4 +1,4 @@
-from ConsoleListInterface import waitForEnter
+from ConsoleListInterface import waitForEnter, cls
 import os
 
 
@@ -18,7 +18,7 @@ def main():
         os.system(f'python3 {file[0]}')
         print("\nEnter to continue.")
         waitForEnter()
-        print()
+        cls()
 
 
 if __name__=="__main__":
